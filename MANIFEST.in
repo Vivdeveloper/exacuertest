@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include exacuertest *.css
+recursive-include exacuertest *.csv
+recursive-include exacuertest *.html
+recursive-include exacuertest *.ico
+recursive-include exacuertest *.js
+recursive-include exacuertest *.json
+recursive-include exacuertest *.md
+recursive-include exacuertest *.png
+recursive-include exacuertest *.py
+recursive-include exacuertest *.svg
+recursive-include exacuertest *.txt
+recursive-exclude exacuertest *.pyc
