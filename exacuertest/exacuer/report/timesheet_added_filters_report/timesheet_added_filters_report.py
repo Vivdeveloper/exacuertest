@@ -21,18 +21,22 @@ def get_columns():
 		_("Employee Name") + "::150",
 		_("Total Hours") + "::70",
 		_("Project") + ":Link/Project:120",
-		_("Customer") + ":Link/Customer:150"
+		_("Project Name") + "::150",  
+		_("Customer") + ":Link/Customer:150",
+		_("Custom Type") + "::120"  
 	]
 
 def get_data(conditions, filters):
 	time_sheet = frappe.db.sql(
 		"""select `tabTimesheet`.employee, `tabTimesheet`.employee_name,
 		SUM(`tabTimesheet Detail`.hours) as total_hours, `tabTimesheet Detail`.project,
-		`tabTimesheet`.customer
+		`tabProject`.project_name, `tabTimesheet`.customer, `tabTimesheet`.custom_type  # Including the project name in the query
 		from `tabTimesheet Detail`
 		join `tabTimesheet` on `tabTimesheet Detail`.parent = `tabTimesheet`.name
+		join `tabProject` on `tabTimesheet Detail`.project = `tabProject`.name  # Joining the Project doctype to get the project name
 		where %s
-		group by `tabTimesheet`.employee, `tabTimesheet Detail`.project, `tabTimesheet`.customer
+		group by `tabTimesheet`.employee, `tabTimesheet Detail`.project, `tabProject`.project_name, 
+		`tabTimesheet`.customer, `tabTimesheet`.custom_type  # Group by the project name and custom field
 		order by `tabTimesheet`.employee""" % (conditions),
 		filters,
 		as_list=1,
@@ -52,6 +56,8 @@ def get_conditions(filters):
 		conditions += " and `tabTimesheet Detail`.project = %(project)s"
 	if filters.get("customer"):
 		conditions += " and `tabTimesheet`.customer = %(customer)s"
+	if filters.get("custom_type"):  
+		conditions += " and `tabTimesheet`.custom_type = %(custom_type)s"
 
 	match_conditions = build_match_conditions("Timesheet")
 	if match_conditions:

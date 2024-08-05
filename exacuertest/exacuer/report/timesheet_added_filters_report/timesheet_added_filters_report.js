@@ -35,8 +35,15 @@ frappe.query_reports["Timesheet added filters Report"] = {
 			"label": __("Customer"),
 			"fieldtype": "Link",
 			"options": "Customer"
+		},
+		{
+			"fieldname": "custom_type",
+			"label": __("Custom Type"),
+			"fieldtype": "Select",
+			"options": [
+				{ "label": __("For Client"), "value": "For Client" },
+				{ "label": __("For Office Use"), "value": "For Office Use" }
+			]
 		}
-		
-
 	]
 };
