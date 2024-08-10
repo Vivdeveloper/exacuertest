@@ -69,7 +69,8 @@ def get_conditions(filters):
 		conditions += " and `tabTimesheet Detail`.project = %(project)s"
 	if filters.get("customer"):
 		conditions += " and `tabTimesheet`.customer = %(customer)s"
-	if filters.get("custom_type"):  
+
+	if filters.get("custom_type") is not None:
 		conditions += " and `tabTimesheet`.custom_type = %(custom_type)s"
 	
 	match_conditions = build_match_conditions("Timesheet")
