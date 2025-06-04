@@ -26,7 +26,14 @@ frappe.query_reports["Timesheet Summary"] = {
 			"fieldname": "employee",
 			"label": __("Employee"),
 			"fieldtype": "Link",
-			"options": "Employee"
+			"options": "Employee",
+			"get_query": function() {
+        		return {
+            			filters: {
+                				"status": "Active"
+            				}
+        			};
+    			}
 		},
 			
 	]
