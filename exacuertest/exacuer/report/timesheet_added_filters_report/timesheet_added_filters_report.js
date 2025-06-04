@@ -21,11 +21,19 @@ frappe.query_reports["Timesheet added filters Report"] = {
 			]
 		},
 		{
-			"fieldname": "employee",
-			"label": __("Employee"),
-			"fieldtype": "Link",
-			"options": "Employee"
-		},
+    			"fieldname": "employee",
+    			"label": __("Employee"),
+    			"fieldtype": "Link",
+    			"options": "Employee",
+    			"get_query": function() {
+        		return {
+            			filters: {
+                				"status": "Active"
+            				}
+        			};
+    			}
+		}
+		,
 		{
 			"fieldname": "start_date",
 			"label": __("Start Date"),
